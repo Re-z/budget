@@ -36,3 +36,18 @@ h2 {
     font-size: 22px;
     margin-bottom:30px;
 }
+.expenses__amount {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: #004e92;
+    padding: 2px 8px;
+    color: white;
+    font-weight: 100;
+    font-size: 12px;
+    border-radius: 20px
+}
+.expenses__item {
+    padding-right: 100px;
+}
