@@ -5,8 +5,8 @@ let totalBudget = document.querySelector('#total'),
     form = document.querySelector('#add-expense')
     formSubmitBtn = document.querySelector('#formSubmit'),
     errorField = document.querySelector('#form-error'),
-    successField = document.querySelector('#form-success');
-
+    successField = document.querySelector('#form-success'),
+    outOfBudgetField = document.querySelector('#out-of-budget');
 
 //functions
 
@@ -21,14 +21,7 @@ function checkPrompt(){
 while (userBudget == false) {
     checkPrompt();
 }
-// let userBudget = prompt('How much do you plan to spend at this week???', 'print a number, please');
-// alert(userBudget.length)
 
-// if(userBudget.length > 0) {
-//     for(let userBudget= prompt('How much do you plan to spend at this week???', 'print a number, please'); userBudget.length > 0; ) {
-//         let userBudget = prompt('How much do you plan to spend at this week???', 'print a number, please');
-//     }
-// // }
 totalBudget.innerHTML = userBudget;
 totalLeft.innerHTML = userBudget;
 formSubmitBtn.addEventListener('click', function (evt) {
@@ -42,7 +35,7 @@ formSubmitBtn.addEventListener('click', function (evt) {
     //preventing default behavior
     evt.preventDefault();
 
-    if(expenseName && amount) {
+    if(expenseName && !isNaN(amount)) {
         //hide error
         errorField.style.display = 'none';
 
@@ -54,21 +47,30 @@ formSubmitBtn.addEventListener('click', function (evt) {
         `
         allExpenses.insertAdjacentHTML('afterbegin', itemPattern);
         form.reset();
+
         //convert string to number and show left budget in DOM
-        totalLeft.innerHTML = parseInt(userBudget) - parseInt(amount);
+        totalLeft.innerHTML = parseInt(totalLeft.innerHTML) - parseInt(amount);
+        
         //show success field
-        successField.style.display = 'block'
+        successField.style.display = 'block';
+
         // hide success field after 3 seconds
         setTimeout(function(){
             successField.style.display = 'none'
         }, 3000)
-        if((parseInt(userBudget)*0.5) > parseInt(totalLeft.innerHTML) ) {
+        if ((parseInt(userBudget)*0.5) > parseInt(totalLeft.innerHTML) ) {
             totalleftWrap.classList.remove('alert-success');
             totalleftWrap.classList.add('alert-warning');
         }
-        if((parseInt(userBudget)*0.25) > parseInt(totalLeft.innerHTML) ) {
+        if ((parseInt(userBudget)*0.25) > parseInt(totalLeft.innerHTML) ) {
             totalleftWrap.classList.remove('alert-warning');
             totalleftWrap.classList.add('alert-danger');
+        }
+        if ((parseInt(totalLeft.innerHTML)) <= 0) {
+            outOfBudgetField.style.display = 'block';
+            totalleftWrap.classList.add('alert-danger');
+
+            formSubmitBtn.setAttribute('disabled', 'true')
         }
 
     } else {

@@ -51,6 +51,6 @@ h2 {
 .expenses__item {
     padding-right: 100px;
 }
-#form-error, #form-success {
+#form-error, #form-success, #out-of-budget {
     display: none;
 }
