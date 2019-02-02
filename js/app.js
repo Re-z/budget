@@ -21,9 +21,10 @@ function checkPrompt(){
 while (userBudget == false) {
     checkPrompt();
 }
-
+//init initial values
 totalBudget.innerHTML = userBudget;
 totalLeft.innerHTML = userBudget;
+
 formSubmitBtn.addEventListener('click', function (evt) {
 
         
@@ -35,11 +36,9 @@ formSubmitBtn.addEventListener('click', function (evt) {
     //preventing default behavior
     evt.preventDefault();
 
-    if(expenseName && !isNaN(amount)) {
+    if(expenseName && !isNaN(amount) && amount !=0) {
         //hide error
         errorField.style.display = 'none';
-
-
 
         //create template for budget itema and add it to the DOM
         itemPattern = `
@@ -78,5 +77,3 @@ formSubmitBtn.addEventListener('click', function (evt) {
     }
     
 })
-
-//listeners
